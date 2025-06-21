@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Buoi2.Models.Product>
+@{
+    ViewData["Title"] = "Trang Chủ";
+}
+
+<!-- Include Animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    /* Custom styles for modern look */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .display-4 {
+        font-weight: 700;
+        color: #1a3c34;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .lead {
+        color: #4a4a4a;
+        font-size: 1.3rem;
+        font-weight: 300;
+    }
+
+    .card {
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #fff;
+        overflow: hidden;
+    }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-title {
+        color: #1a3c34;
+        font-weight: 600;
+    }
+
+    .card-text {
+        color: #6c757d;
+    }
+
+    .btn-custom {
+        background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        border: none;
+        border-radius: 25px;
+        padding: 10px 30px;
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-custom:hover {
+            background: linear-gradient(45deg, #ff4b2b, #ff416c);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+
+    /* Animation for cards */
+    .card {
+        animation: fadeInUp 0.6s ease-out;
+        animation-delay: calc(0.1s * var(--i));
+    }
+
+        /* Ensure cards are fully clickable */
+        .card a {
+            text-decoration: none;
+        }
+</style>
+
+<div class="container mt-5">
+    <div class="text-center mb-5 animate__animated animate__fadeIn">
+        <h1 class="display-4">Shop Nè</h1>
+        <p class="lead">Hỏi nhiều bán nhiều</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <div class="col-md-5">
+            <div class="card shadow text-center h-100 border-0" style="--i: 1;">
+                <div class="card-body">
+                    <h5 class="card-title">Danh Sách Sản Phẩm</h5>
+                    <p class="card-text">Xem tất cả sản phẩm đang có.</p>
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-custom">Xem</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow text-center h-100 border-0" style="--i: 2;">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm Sản Phẩm</h5>
+                    <p class="card-text">Thêm sản phẩm mới vào danh sách.</p>
+                    <a asp-controller="Product" asp-action="Add" class="btn btn-custom">Thêm Mới</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

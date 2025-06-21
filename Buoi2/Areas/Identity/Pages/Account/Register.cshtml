@@ -1,0 +1,322 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Include Animate.css and Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        padding-top: 80px; /* Offset for fixed navbar */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Fixed Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        animation: slideInDown 0.8s ease-out;
+    }
+
+    .navbar-brand {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: transform 0.3s ease;
+    }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            color: #f8f9fa;
+        }
+
+    .navbar-nav .nav-link {
+        color: white;
+        font-weight: 500;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+    /* Center Navbar Content */
+    .navbar .container-fluid {
+        justify-content: center;
+    }
+
+    .navbar-nav {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    /* Register Container */
+    .register-container {
+        max-width: 400px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .register-title {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 1.2rem;
+    }
+
+        .form-group label {
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
+
+    .form-control {
+        border: none;
+        border-bottom: 2px solid #dfe6e9;
+        border-radius: 0;
+        padding: 0.6rem 1.8rem 0.6rem 2.2rem; /* Space for icons */
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        background: transparent;
+    }
+
+        .form-control:focus {
+            border-bottom-color: #ff4b2b;
+            box-shadow: 0 2px 5px rgba(255, 75, 43, 0.2);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #b2bec3;
+        }
+
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1rem;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 0.6rem;
+        top: 2.2rem;
+        color: #6c757d;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+    }
+
+    .form-control:focus + .input-icon {
+        color: #ff4b2b;
+    }
+
+    .btn-register {
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        border: none;
+        border-radius: 20px;
+        padding: 0.6rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: white;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+        .btn-register:hover {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+
+    .links {
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+        .links a {
+            color: #ff4b2b;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            .links a:hover {
+                color: #e01e4f;
+                text-decoration: underline;
+            }
+
+    .separator {
+        text-align: center;
+        margin: 1.5rem 0;
+        position: relative;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #dfe6e9;
+        }
+
+        .separator::before {
+            left: 0;
+        }
+
+        .separator::after {
+            right: 0;
+        }
+
+        .separator span {
+            background: #fff;
+            padding: 0 0.5rem;
+        }
+
+    .btn-social {
+        background: transparent;
+        border: 2px solid #dfe6e9;
+        border-radius: 20px;
+        color: #2c3e50;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.5rem;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+        .btn-social:hover {
+            background: #f8f9fa;
+            border-color: #ff4b2b;
+            transform: translateY(-2px);
+        }
+
+    .bi {
+        margin-right: 0.5rem;
+    }
+
+    .text-danger {
+        font-size: 0.85rem;
+        color: #ff4b2b;
+        margin-top: 0.3rem;
+    }
+</style>
+
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Khoa Chan</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="register-container shadow animate__animated animate__fadeInUp">
+    <div class="register-title">Create New Account</div>
+
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+        <div class="form-group">
+            <label asp-for="Input.FullName" class="form-label">Full Name</label>
+            <i class="bi bi-person input-icon"></i>
+            <input asp-for="Input.FullName" class="form-control" placeholder="Enter your full name" autocomplete="name" />
+            <span asp-validation-for="Input.FullName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Email" class="form-label">Email</label>
+            <i class="bi bi-envelope input-icon"></i>
+            <input asp-for="Input.Email" class="form-control" placeholder="name@example.com" autocomplete="username" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Password" class="form-label">Password</label>
+            <i class="bi bi-lock input-icon"></i>
+            <input asp-for="Input.Password" class="form-control" placeholder="Password" autocomplete="new-password" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+            <i class="bi bi-lock-fill input-icon"></i>
+            <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" autocomplete="new-password" />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Input.Role" class="form-label">Select Role</label>
+            <i class="bi bi-person-gear input-icon"></i>
+            <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-control">
+                <option disabled selected>- Select Role -</option>
+            </select>
+            <span asp-validation-for="Input.Role" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-register">Register</button>
+
+        <div class="links">
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Already have an account? Log in</a>
+        </div>
+
+        <div class="separator"><span>or</span></div>
+
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="text-center">
+            <button type="submit" class="btn btn-social" name="provider" value="Facebook">
+                <i class="bi bi-facebook"></i> Register with Facebook
+            </button>
+            <button type="submit" class="btn btn-social" name="provider" value="Twitter">
+                <i class="bi bi-twitter"></i> Register with Twitter
+            </button>
+        </form>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

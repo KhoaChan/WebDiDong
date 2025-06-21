@@ -1,0 +1,156 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<!-- Include Animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .success-container {
+        max-width: 600px;
+        padding: 3rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .success-icon {
+        font-size: 5rem;
+        color: #28a745;
+        margin-bottom: 1.5rem;
+        animation: bounceIn 1s ease;
+    }
+
+    h2 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    .order-id {
+        font-size: 1.5rem;
+        color: #6c5ce7;
+        font-weight: 700;
+        margin: 1rem 0;
+    }
+
+    .success-message {
+        font-size: 1.1rem;
+        color: #495057;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .btn-continue {
+        background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn-continue:hover {
+            background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(108, 92, 231, 0.4);
+            color: white;
+        }
+
+        .btn-continue i {
+            margin-right: 8px;
+        }
+
+    .order-details {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        text-align: left;
+    }
+
+    .detail-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+    }
+
+    .detail-label {
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .detail-value {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    @@media (max-width: 576px) {
+        .success-container {
+            padding: 2rem 1.5rem;
+            margin: 1rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+        }
+    }
+</style>
+
+<div class="success-container animate__animated animate__fadeInUp">
+    <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+    </div>
+
+    <h2>Đặt hàng thành công!</h2>
+
+    <p class="success-message">
+        Cảm ơn bạn đã mua sắm tại cửa hàng chúng tôi. Đơn hàng của bạn đã được tiếp nhận và đang được xử lý.
+    </p>
+
+    <div class="order-details animate__animated animate__fadeIn animate__delay-1s">
+        <div class="detail-item">
+            <span class="detail-label">Mã đơn hàng:</span>
+            <span class="detail-value order-id">#@Model</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Ngày đặt hàng:</span>
+            <span class="detail-value">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Trạng thái:</span>
+            <span class="detail-value" style="color: #28a745;">Đã tiếp nhận</span>
+        </div>
+    </div>
+
+    <p class="success-message">
+        Chúng tôi sẽ gửi thông báo đến email của bạn khi đơn hàng được giao.
+    </p>
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-continue animate__animated animate__fadeIn animate__delay-2s">
+        <i class="fas fa-arrow-left"></i> Tiếp tục mua sắm
+    </a>
+</div>

@@ -1,0 +1,95 @@
+﻿@model Buoi2.Models.Product
+
+<!-- Include Animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    /* Custom styles for modern look */
+    body {
+        background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .product-card {
+        background: #fff;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+    .product-title {
+        color: #1a3c34;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .product-price {
+        color: #ff416c;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .product-description {
+        color: #6c757d;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-image {
+        max-width: 250px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+    .btn-back {
+        display: inline-block;
+        background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-back:hover {
+            background: linear-gradient(45deg, #ff4b2b, #ff416c);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+</style>
+
+<div class="container">
+    <div class="product-card animate__animated animate__fadeIn">
+        <h2 class="product-title">@Model.Name</h2>
+        <div>
+            <h3 class="product-price">Price: @Model.Price</h3>
+            <p class="product-description">@Model.Description</p>
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Product Image" class="product-image" />
+            }
+        </div>
+        <a asp-action="Index" class="btn-back mt-3">Quay Lại</a>
+    </div>
+</div>

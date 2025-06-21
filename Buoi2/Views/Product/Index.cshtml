@@ -1,0 +1,197 @@
+﻿@model IEnumerable<Buoi2.Models.Product>
+@{
+    ViewData["Title"] = "Products";
+    int numOfQuantity = 1;
+}
+
+<!-- Animate.css và Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: #ffffff;
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        padding: 2rem;
+    }
+
+    .page-title {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .btn-add {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        border: none;
+        border-radius: 25px;
+        padding: 0.8rem 2rem;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin-bottom: 2rem;
+        text-decoration: none;
+    }
+
+        .btn-add:hover {
+            background: linear-gradient(45deg, #20c997, #28a745);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            text-decoration: none;
+        }
+
+
+    /* Card phải có position & block để hiệu ứng hoạt động */
+    .product-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease-in-out;
+        transform: scale(1);
+        position: relative;
+        display: block;
+        overflow: hidden;
+    }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            padding: 10px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.08);
+        }
+
+
+        .product-card .card-body {
+            padding: 1rem;
+        }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-actions {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .btn-func {
+        flex: 1 1 30%;
+        border: none;
+        color: white;
+        padding: 0.4rem 0.6rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+        text-align: center;
+        text-decoration: none !important;
+        display: inline-block;
+    }
+
+        .btn-func:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none !important;
+        }
+
+    .btn-view {
+        background: linear-gradient(45deg, #007bff, #00c4ff);
+    }
+
+    .btn-edit {
+        background: linear-gradient(45deg, #17a2b8, #20c997);
+    }
+
+    .btn-delete {
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    }
+
+    .btn-cart {
+        background: linear-gradient(45deg, #6c757d, #495057);
+        border: none;
+        color: white;
+        width: 100%;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        padding: 0.5rem;
+        text-decoration: none !important;
+        display: inline-block;
+    }
+
+        .btn-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+            text-decoration: none !important;
+        }
+
+</style>
+
+<div class="container">
+    <h2 class="page-title animate__animated animate__fadeInDown">Danh sách sản phẩm</h2>
+
+    <p>
+        <a asp-action="Add" class="btn btn-add">Thêm sản phẩm</a>
+    </p>
+
+    <!-- Product Card Grid -->
+    <div class="card-container">
+        @foreach (var product in Model)
+        {
+            <div class="product-card animate__animated animate__fadeInUp">
+                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    <img src="@product.ImageUrl" alt="@product.Name" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text text-danger fw-bold">@product.Price.ToString("N0") đ</p>
+                    <p class="text-muted">@product.Description</p>
+
+                    <div class="card-actions">
+                        <a asp-action="Display" asp-route-id="@product.Id" class="btn-func btn-view">Xem</a>
+                        <a asp-action="Update" asp-route-id="@product.Id" class="btn-func btn-edit">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@product.Id" class="btn-func btn-delete">Xóa</a>
+                    </div>
+
+                    <a asp-controller="ShoppingCart" asp-action="AddToCart"
+                       asp-route-productid="@product.Id" asp-route-quantity="@numOfQuantity"
+                       class="btn-cart d-block text-center">
+                        <i class="bi bi-cart-fill me-1"></i> Thêm vào giỏ hàng
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

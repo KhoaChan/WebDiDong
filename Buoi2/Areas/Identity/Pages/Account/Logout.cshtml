@@ -1,0 +1,162 @@
+﻿@page
+@model LogoutModel
+
+@{
+    ViewData["Title"] = "Log out";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Include Animate.css and Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        padding-top: 80px; /* Offset for fixed navbar */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Fixed Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        animation: slideInDown 0.8s ease-out;
+    }
+
+    .navbar-brand {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: transform 0.3s ease;
+    }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            color: #f8f9fa;
+        }
+
+    .navbar-nav .nav-link {
+        color: white;
+        font-weight: 500;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+    /* Logout Container */
+    .logout-container {
+        max-width: 380px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .logout-title {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+    }
+
+    .message {
+        color: #2c3e50;
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .btn-logout {
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        border: none;
+        border-radius: 20px;
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: white;
+        width: 100%;
+        max-width: 200px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-logout:hover {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+
+        .btn-logout .bi {
+            margin-right: 0.5rem;
+        }
+
+    .return-link {
+        color: #ff4b2b;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .return-link:hover {
+            color: #e01e4f;
+            text-decoration: underline;
+        }
+
+        .return-link .bi {
+            margin-right: 0.5rem;
+        }
+</style>
+
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Khoa Chan</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="logout-container shadow animate__animated animate__fadeInUp">
+    <div class="logout-title">@ViewData["Title"]</div>
+
+    @{
+        if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <p class="message">Are you sure you want to log out?</p>
+                <button type="submit" class="btn btn-logout"><i class="bi bi-box-arrow-right"></i> Logout</button>
+            </form>
+        }
+        else
+        {
+            <p class="message">You have successfully logged out.</p>
+            <a asp-page="/Account/Login" class="return-link"><i class="bi bi-arrow-left"></i> Return to Login</a>
+        }
+    }
+</div>

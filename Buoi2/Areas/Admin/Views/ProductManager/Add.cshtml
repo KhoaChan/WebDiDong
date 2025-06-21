@@ -1,0 +1,252 @@
+﻿@model Buoi2.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<!-- Include Animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        padding: 2rem;
+        padding-top: 80px; /* Offset for fixed navbar */
+    }
+
+    /* Navbar Styles */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        animation: slideInDown 0.8s ease-out;
+    }
+
+    .navbar-brand {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: transform 0.3s ease;
+    }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            color: #f8f9fa;
+        }
+
+    .navbar-nav .nav-link {
+        color: white;
+        font-weight: 500;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+    .form-container {
+        background: #fff;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 100%;
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    .form-title {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 1.8rem;
+        animation: fadeInUp 0.6s ease-out;
+        animation-delay: calc(0.1s * var(--i));
+    }
+
+        .form-group label {
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+    .form-control {
+        border: none;
+        border-bottom: 2px solid #dfe6e9;
+        border-radius: 0;
+        padding: 0.8rem 0.5rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        background: transparent;
+    }
+
+        .form-control:focus {
+            border-bottom-color: #ff4b2b;
+            box-shadow: 0 2px 5px rgba(255, 75, 43, 0.2);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #b2bec3;
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1rem;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+        color: #ff4b2b;
+        margin-top: 0.3rem;
+        display: block;
+    }
+
+    .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+    }
+
+        .file-input-wrapper input[type="file"] {
+            font-size: 1rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+    .file-input-label {
+        display: block;
+        padding: 0.8rem 1rem;
+        background: #f8f9fa;
+        border: 2px dashed #dfe6e9;
+        border-radius: 10px;
+        text-align: center;
+        color: #6c757d;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .file-input-label:hover {
+            border-color: #ff4b2b;
+            background: #ffe6e2;
+        }
+
+    .btn-submit {
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        border: none;
+        border-radius: 25px;
+        padding: 0.8rem 2rem;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+        .btn-submit:hover {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+</style>
+
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Khoa Chan</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="form-container animate__animated animate__fadeInDown">
+        <h2 class="form-title">Add New Product</h2>
+        <form asp-action="Add" method="post" enctype="multipart/form-data">
+            <div class="form-group" style="--i: 1;">
+                <label asp-for="Name">Product Name</label>
+                <input asp-for="Name" class="form-control" placeholder="Enter product name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="--i: 2;">
+                <label asp-for="Price">Price</label>
+                <input asp-for="Price" class="form-control" placeholder="Enter price" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="--i: 3;">
+                <label asp-for="Description">Description</label>
+                <textarea asp-for="Description" class="form-control" placeholder="Describe the product"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="--i: 4;">
+                <label asp-for="CategoryId">Category</label>
+                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                    <option value="">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="--i: 5;">
+                <label>Product Image</label>
+                <div class="file-input-wrapper">
+                    <span class="file-input-label">Choose an image</span>
+                    <input type="file" name="imageUrl" class="form-control" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Add Product</button>
+        </form>
+    </div>
+</div>
+
+<!-- Include ASP.NET Core client-side validation scripts -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

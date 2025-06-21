@@ -1,0 +1,239 @@
+﻿@model IEnumerable<Buoi2.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<!-- Include Animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        padding: 2rem;
+    }
+
+    .container {
+        max-width: 1200px;
+    }
+
+    .page-title {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    .btn-add {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        border: none;
+        border-radius: 25px;
+        padding: 0.8rem 2rem;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }
+
+    .btn-add:hover {
+        background: linear-gradient(45deg, #20c997, #28a745);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+    }
+
+    /* Table Styles */
+    .table-container {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead {
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        color: white;
+    }
+
+    .table th {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+
+    .table td {
+        vertical-align: middle;
+        color: #2c3e50;
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    .table tr {
+        transition: background 0.3s ease;
+    }
+
+    .table tr:hover {
+        background: #f8f9fa;
+    }
+
+    .product-image {
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .product-image:hover {
+        transform: scale(1.1);
+    }
+
+    .btn-action {
+        border-radius: 20px;
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+        margin: 0.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-view {
+        background: linear-gradient(45deg, #007bff, #00c4ff);
+        border: none;
+        color: white;
+    }
+
+    .btn-edit {
+        background: linear-gradient(45deg, #17a2b8, #20c997);
+        border: none;
+        color: white;
+    }
+
+    .btn-delete {
+        background: linear-gradient(45deg, #ff4b2b, #ff416c);
+        border: none;
+        color: white;
+    }
+
+    /* Card Styles for Mobile */
+    .card-container {
+        display: none;
+    }
+
+    .product-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+        animation: fadeInUp 0.6s ease-out;
+        animation-delay: calc(0.1s * var(--i));
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-card img {
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .product-card p {
+        margin: 0.5rem 0;
+        color: #6c757d;
+    }
+
+    .product-card strong {
+        color: #2c3e50;
+    }
+
+
+        .card-container {
+            display: block;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2 class="page-title animate__animated animate__fadeInDown">Products</h2>
+
+    <p>
+        <a asp-action="Add" class="btn btn-add">Thêm sản phẩm</a>
+    </p>
+
+    <!-- Table for Desktop -->
+    <div class="table-container animate__animated animate__fadeInUp">
+        <table class="table table-striped text-center align-middle">
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Mô tả</th>
+                    <th>Ảnh sản phẩm</th>
+                    <th>Loại</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Price.ToString("N0") đ</td>
+                        <td>@product.Description</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="@product.ImageUrl" alt="Ảnh sản phẩm" class="product-image" width="80" height="100" />
+                            }
+                        </td>
+                        <td>@product.Category?.Name</td>
+                        <td>
+                            <a asp-action="Display" asp-route-id="@product.Id" class="btn btn-action btn-view">View</a>
+                            <a asp-action="Update" asp-route-id="@product.Id" class="btn btn-action btn-edit">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-action btn-delete">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Cards for Mobile -->
+    <div class="card-container">
+        @foreach (var product in Model)
+        {
+            <div class="product-card animate__animated animate__fadeInUp" style="--i: @Model.ToList().IndexOf(product);">
+                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    <img src="@product.ImageUrl" alt="Ảnh sản phẩm" class="product-image" width="100%" height="150" style="object-fit: cover;" />
+                }
+                <p><strong>Name:</strong> @product.Name</p>
+                <p><strong>Price:</strong> @product.Price.ToString("N0") đ</p>
+                <p><strong>Description:</strong> @product.Description</p>
+                <p><strong>Category:</strong> @product.Category?.Name</p>
+                <div>
+                    <a asp-action="Display" asp-route-id="@product.Id" class="btn btn-action btn-view">View</a>
+                    <a asp-action="Update" asp-route-id="@product.Id" class="btn btn-action btn-edit">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-action btn-delete">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

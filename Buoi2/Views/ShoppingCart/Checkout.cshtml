@@ -1,0 +1,158 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<!-- Include Animate.css for animations -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .checkout-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2.5rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .checkout-title {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 1.8rem;
+        text-align: center;
+        position: relative;
+        padding-bottom: 0.8rem;
+    }
+
+        .checkout-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe);
+        }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+        .form-group label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+        }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .btn-checkout {
+        background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    }
+
+        .btn-checkout:hover {
+            background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-checkout:active {
+            transform: translateY(1px);
+        }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 1.5rem;
+        color: #6c757d;
+        transition: all 0.3s ease;
+    }
+
+        .back-link:hover {
+            color: #5a6268;
+            transform: translateX(-3px);
+        }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .checkout-container {
+            padding: 1.5rem;
+            margin: 1rem;
+        }
+    }
+</style>
+
+<div class="checkout-container animate__animated animate__fadeInUp">
+    <h2 class="checkout-title">
+        <i class="fas fa-credit-card"></i> Thông tin thanh toán
+    </h2>
+
+    <form asp-action="Checkout" method="post">
+        <div class="form-group animate__animated animate__fadeIn">
+            <label asp-for="ShippingAddress">
+                <i class="fas fa-truck"></i> Địa chỉ giao hàng
+            </label>
+            <input asp-for="ShippingAddress" class="form-control" placeholder="Nhập địa chỉ giao hàng đầy đủ" />
+            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+        </div>
+
+        <div class="form-group animate__animated animate__fadeIn animate__delay-1s">
+            <label asp-for="Notes">
+                <i class="fas fa-edit"></i> Ghi chú đơn hàng
+            </label>
+            <textarea asp-for="Notes" class="form-control" placeholder="Ghi chú về đơn hàng (nếu có)"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn-checkout animate__animated animate__fadeIn animate__delay-2s">
+            <i class="fas fa-paper-plane"></i> Đặt hàng ngay
+        </button>
+    </form>
+
+    <a asp-action="Index" asp-controller="Cart" class="back-link animate__animated animate__fadeIn animate__delay-3s">
+        <i class="fas fa-arrow-left"></i> Quay lại giỏ hàng
+    </a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
