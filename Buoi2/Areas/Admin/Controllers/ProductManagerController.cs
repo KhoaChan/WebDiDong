@@ -26,6 +26,7 @@ namespace Buoi2.Areas.Admin.Controllers
             return View(products);
         }
         // Hiển thị form thêm sản phẩm mới
+        [Route("Add")]
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryRepository.GetAllAsync();
@@ -33,6 +34,7 @@ namespace Buoi2.Areas.Admin.Controllers
             return View();
         }
         // Xử lý thêm sản phẩm mới
+        [Route("Add")]
         [HttpPost]
         public async Task<IActionResult> Add(Product product, IFormFile
         imageUrl)
@@ -77,6 +79,7 @@ namespace Buoi2.Areas.Admin.Controllers
             return View(product);
         }
         // Hiển thị form cập nhật sản phẩm
+        [Route("Update")]
         public async Task<IActionResult> Update(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
@@ -90,6 +93,7 @@ namespace Buoi2.Areas.Admin.Controllers
             return View(product);
         }
         // Xử lý cập nhật sản phẩm
+        [Route("Update")]
         [HttpPost]
         public async Task<IActionResult> Update(int id, Product product,
         IFormFile imageUrl)
@@ -127,6 +131,7 @@ namespace Buoi2.Areas.Admin.Controllers
             return View(product);
         }
         // Hiển thị form xác nhận xóa sản phẩm
+        [Route("Detele")]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
@@ -137,6 +142,7 @@ namespace Buoi2.Areas.Admin.Controllers
             return View(product);
         }
         // Xử lý xóa sản phẩm
+        [Route("Detele")]
         [HttpPost, ActionName("DeleteConfirmed")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

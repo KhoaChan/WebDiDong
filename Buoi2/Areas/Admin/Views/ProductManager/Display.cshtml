@@ -1,5 +1,5 @@
 ﻿@model Buoi2.Models.Product
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!-- Include Animate.css for animations -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
@@ -87,9 +87,9 @@
             <p class="product-description">@Model.Description</p>
             @if (!string.IsNullOrEmpty(Model.ImageUrl))
             {
-                <img src="" alt="Product Image" class="product-image" />
+                <img src="@Model.ImageUrl" alt="Product Image" class="product-image" />
             }
         </div>
-        <a asp-action="Index" class="btn-back mt-3">Back to List</a>
+        <a asp-action="Index" class="btn-back mt-3">Quay Lại</a>
     </div>
 </div>
